@@ -1,6 +1,7 @@
 from inference_sdk import InferenceHTTPClient
 import cv2
 import os
+import time
 import supervision as sv
 import numpy as np
 from PIL import Image
@@ -13,6 +14,8 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 DELAY_SECONDS = 5
+CAM_PORT = 0
+
 CLIENT = InferenceHTTPClient(
     api_url="https://detect.roboflow.com",
     api_key="mm2hH79xruPVWBquMOAz"
@@ -23,8 +26,7 @@ path = "images/input/"
 
 
 def main():
-    cam_port = 0
-    cam = cv2.VideoCapture(cam_port)
+    cam = cv2.VideoCapture(CAM_PORT)
 
     cred = credentials.Certificate("serviceAccountKey.json")
     firebase_admin.initialize_app(cred)
@@ -33,21 +35,31 @@ def main():
     while True:
         # reading the input using the camera
         result, frame = cam.read()
+        # img = np.asarray(Image.open(
+        #    "images/input/WIN_20250215_14_15_10_Pro.jpg"))
 
         # If image is detected without any error, show result
         if result:
-            result = CLIENT.infer(frame, model_id="head-detection-cctv/1")
-            print(result)
+            try:
+                result = CLIENT.infer(frame, model_id="head-detection-cctv/1")
+                print(result)
 
-            # If 'q' key is pressed, break the loop
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+                annotated_img, count = process_image(
+                    frame, result.get('predictions', []))
+                post(db, annotated_img, count)
+            except Exception as e:
+                print(f"Error during inference or processing: {e}")
 
-            annotated_img, count = process_image(frame, result['predictions'])
-            post(db, annotated_img, count)
+            # cv2.imshow("annotated_img", annotated_img)
 
         else:
             print("No image detected. Please try again")
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+        time.sleep(DELAY_SECONDS)
+    cam.release()
+    # cv2.destroyAllWindows()
 
 
 def process_image(img, predictions):
@@ -55,10 +67,10 @@ def process_image(img, predictions):
         detections = sv.Detections(
             xyxy=np.array([
                 [
-                    pred['x'],
-                    pred['y'],
-                    pred['x'] + pred['width'],
-                    pred['y'] + pred['height']
+                    pred['x'] - (pred['width'] / 2),  # x1 (top-left)
+                    pred['y'] - (pred['height'] / 2),  # y1 (top-left)
+                    pred['x'] + (pred['width'] / 2),  # x2 (bottom-right)
+                    pred['y'] + (pred['height'] / 2)  # y2 (bottom-right)
                 ] for pred in predictions
             ]),
             class_id=np.array([pred['class_id']
@@ -81,15 +93,23 @@ def process_image(img, predictions):
 def post(db, img, count):
     timestamp = datetime.datetime.now()
     int_time = int(timestamp.strftime("%Y%m%d%H%M%S"))
-    # encoded_img = base64.b64encode(img)
-    x = {
+
+    # Convert OpenCV image to Base64 for storage
+    _, buffer = cv2.imencode('.jpg', img)
+    encoded_img = base64.b64encode(buffer).decode('utf-8')
+
+    data = {
         "id": int_time,
         "count": count,
-        "timestamp": str(timestamp),
-        "image": str(img),
+        "timestamp": firestore.SERVER_TIMESTAMP,
+        "image": encoded_img,
     }
 
-    db.collection('images').add(x)
+    try:
+        db.collection('images').add(data)
+        print(f"Data successfully posted: {data}")
+    except Exception as e:
+        print(f"Failed to post data: {e}")
 
 
 main()
