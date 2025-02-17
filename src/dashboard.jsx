@@ -127,8 +127,18 @@ const Dashboard = () => {
 				console.error("Error fetching metrics from Firebase:", error);
 			}
 		};
+
+		// Call fetchMetrics immediately when the component mounts
 		fetchMetrics();
-	}, [capacity, email, evacuationMode]);
+
+		// Set an interval to run fetchMetrics every 10 seconds
+		const interval = setInterval(() => {
+			console.log("Fetching metrics every 10 seconds");
+			fetchMetrics();
+		}, 10000);
+
+		return () => clearInterval(interval); // Cleanup the interval on unmount
+	}, [capacity, email, evacuationMode]); // Dependencies that trigger re-fetching
 
 	const sendEmailNotification = (currentCount) => {
 		emailjs
