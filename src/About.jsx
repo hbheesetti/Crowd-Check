@@ -19,7 +19,7 @@ const teamMembers = [
 		name: "Leen Alzebdeh",
 		role: "Developer",
 		description:
-			"John is responsible for building the user interface and ensuring a seamless user experience.",
+			"Leen Alzebdeh is a computer science graduate student at the University of Alberta, specializing in AI/ML research in healthcare. Her interests are time series analysis, deep learning and computer vision.",
 		photo: leenImg,
 	},
 	{
