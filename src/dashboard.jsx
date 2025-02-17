@@ -237,7 +237,7 @@ const Dashboard = () => {
 								<span className="mr-2 text-gray-600 text-base">
 									{evacuationMode
 										? "Evacuation Mode"
-										: "Monitoring Mode"}
+										: "Fire Drill Mode"}
 								</span>
 								<input
 									type="checkbox"
