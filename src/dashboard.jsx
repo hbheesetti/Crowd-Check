@@ -226,14 +226,6 @@ const Dashboard = () => {
 						>
 							Crowd Monitoring Dashboard
 						</h1>
-						<div className="flex gap-4">
-							<button className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">
-								Dashboard
-							</button>
-							<button className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600">
-								Team
-							</button>
-						</div>
 					</div>
 
 					<div className="grid grid-cols-4 gap-5 col-span-3">
