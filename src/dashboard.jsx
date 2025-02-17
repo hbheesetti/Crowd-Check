@@ -133,15 +133,15 @@ const Dashboard = () => {
 	const sendEmailNotification = (currentCount) => {
 		emailjs
 			.send(
-				"crowd_checkers",
-				"template_h6wreha",
+				"service_gmail",
+				"template_01rwpfq",
 				{
 					to_email: email,
 					message: `Room capacity exceeded! Current: ${currentCount}, Over limit: ${
 						currentCount - capacity
 					}.`,
 				},
-				"kCLCRfVc0mFIwpO5y"
+				"o-ZGb5mMig2NQtPTq"
 			)
 			.then(() => {
 				console.log("Email sent successfully!");
