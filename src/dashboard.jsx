@@ -219,9 +219,9 @@ const Dashboard = () => {
 				</div>
 			) : (
 				<div className="container flex justify-center min-w-full mx-auto p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-gray-100">
-					<div className="col-span-3 text-center">
+					<div className="flex justify-between items-center mb-6">
 						<h1
-							className="text-3xl font-extrabold mb-6 text-gray-800"
+							className="text-3xl font-extrabold text-gray-800"
 							style={{ fontFamily: "'Poppins', sans-serif" }}
 						>
 							Crowd Monitoring Dashboard
