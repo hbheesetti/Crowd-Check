@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+body {
+  background-color: #1E3A8A; /* Navy blue */
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  background-color: #1E3A8A;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #F97316; /* Orange */
+}
+
+.bg-white {
+  background-color: #1E3A8A;
+  color: white;
+  border: 2px solid #F97316;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+input, label {
+  color: white;
+  display: block;
+  margin-bottom: 8px;
+}
+
+input {
+  background-color: #1E3A8A;
+  border: 1px solid #F97316;
+  padding: 0.5rem;
+  border-radius: 4px;
+  color: white;
+}
+
+button {
+  background-color: #F97316;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ea580c; /* Darker orange */
+}
