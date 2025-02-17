@@ -219,13 +219,21 @@ const Dashboard = () => {
 				</div>
 			) : (
 				<div className="container flex justify-center min-w-full mx-auto p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-gray-100">
-					<div className="col-span-3 text-center">
+					<div className="flex justify-between items-center mb-6">
 						<h1
-							className="text-3xl font-extrabold mb-6 text-gray-800"
+							className="text-3xl font-extrabold text-gray-800"
 							style={{ fontFamily: "'Poppins', sans-serif" }}
 						>
 							Crowd Monitoring Dashboard
 						</h1>
+						<div className="flex gap-4">
+							<button className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">
+								Dashboard
+							</button>
+							<button className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600">
+								Team
+							</button>
+						</div>
 					</div>
 
 					<div className="grid grid-cols-4 gap-5 col-span-3">
