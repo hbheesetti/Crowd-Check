@@ -26,14 +26,14 @@ const teamMembers = [
 		name: "Sukhnoor Kehra",
 		role: "Developer",
 		description:
-			"Jane develops and maintains the server-side logic and database connections.",
+			"Sukhnoor Kehra is a skilled developer specializing in front-end software and data analytics.",
 		photo: "https://via.placeholder.com/100",
 	},
 	{
 		name: "Justin Rozeboom",
 		role: "Developer",
 		description:
-			"Jane develops and maintains the server-side logic and database connections.",
+			"Justin Rozeboom is a graduate computing science student at the University of Alberta, specializing in biomedical computer vision.",
 		photo: "https://via.placeholder.com/100",
 	},
 	{
