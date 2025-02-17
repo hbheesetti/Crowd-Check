@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "rsuite/dist/rsuite.min.css";
+import {
+	Input,
+	Button,
+	Toggle,
+	Notification,
+	useToaster,
+	Panel,
+	FlexboxGrid,
+} from "rsuite";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+//import { Home } from './Home.jsx';
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 import { initializeApp } from "firebase/app";
@@ -12,7 +24,6 @@ import {
 	query,
 	limit,
 } from "firebase/firestore";
-import "./dashboard.css";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyD6d4nPbHhoDurjpv30YxobFTVyg9cgitc",
@@ -28,7 +39,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const Dashboard = () => {
+const App = () => {
 	const [showPopup, setShowPopup] = useState(true);
 	const [currentCount, setCurrentCount] = useState(0);
 	const [highestCount, setHighestCount] = useState(0);
@@ -146,6 +157,15 @@ const Dashboard = () => {
 		}
 	};
 
+	const emailNotification = (currentCount) => {
+		if (evacuationMode == false && currentCount > capacity) {
+			sendEmailNotification(currentCount);
+		}
+		if (evacuationMode == true && currentCount > 0) {
+			sendEmailNotification(currentCount);
+		}
+	};
+
 	return (
 		<>
 			{showPopup ? (
@@ -179,7 +199,7 @@ const Dashboard = () => {
 					</div>
 				</div>
 			) : (
-				<div className="container flex justify-center min-w-full mx-auto p-20 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-white">
+				<div className="container flex justify-center min-w-full mx-auto p-[10px] grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 bg-gray-300">
 					<div className="col-span-4 text-center">
 						<h1
 							className="text-lg font-bold mb-6 text-white"
@@ -272,4 +292,4 @@ const Dashboard = () => {
 	);
 };
 
-export default Dashboard;
+export default App;
